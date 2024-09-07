@@ -1,0 +1,35 @@
+:root{ 
+    --blue: #007bff;
+    --dark: #343a40;
+}    
+
+a{
+    text-decoration: none;
+}
+
+.headerNavBar a{
+    margin: 0px .5rem;
+}
+
+.sticky-header{
+    background-color: var(--color);
+}
+
+.navLinks::after {
+    content: '';
+    display: block;
+    height: 0.3rem;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    background-color: var(--blue);
+}
+
+.navLinks:hover::after{
+    transform: scaleX(1);
+}
+
+.navLinks:focus::after{
+    transform: scaleX(1);
+}
