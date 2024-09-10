@@ -1,5 +1,6 @@
 import React, { lazy } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './CSS/Root_CSS.css'
 import Header from './Common Componenets/Header.jsx'
 import Home from './Home.jsx'
 import AddProduct from './Common Componenets/AddProduct.jsx'

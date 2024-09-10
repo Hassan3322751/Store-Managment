@@ -1,26 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { getProducts } from '../Context/Context.jsx';
+import React, { useContext } from 'react'
+import { ProductsContext } from '../Context/Context.jsx';
 import '../CSS/Product.css'
 import { Pagination, Spinner } from 'react-bootstrap';
+import { FaRegHeart } from "react-icons/fa";
+import heartFill from '../../public/heart-fill-svgrepo-com.svg'
 
-const Product = (data) => {
-    const [ products, setProducts ] = useState()
-    const [ docsCount, setDocsCount ] = useState()
-    const [ page, setPage ] = useState(1)
-    console.log(getProducts)
-    // const { 
-    //     state: {Products},
-    // } = getProducts();
 
-    // console.log(Products)
-    
-    // useEffect(()=>{
-    //     async function data(){
-    //         await getProducts(page)
-    //     }
-    //     data()
-    // }, [])
-    
+const Product = () => {
+    const { products, docsCount, getProducts, page, setPage, filter, addToFav, query } = useContext(ProductsContext)
 
     let pags = [];
     let pages = Math.ceil(docsCount/9);
@@ -33,10 +20,20 @@ const Product = (data) => {
     }
     
     const handlePagination = async(e) => {
-        const page = e.target.tabIndex;
-        e.target.active = page;
-        setPage(page)
-        await getProducts(page)
+        const curPage = e.target.tabIndex;
+        e.target.active = curPage;
+        setPage(curPage)
+        await getProducts(curPage, filter, query)
+    }
+
+    const handleFav = async(e) => {
+        const id = e.target.id;
+        await addToFav(id)
+    }
+    
+    const handleFav1 = async(e) => {
+        const id = e.target.id;
+        await addToFav(id)
     }
 
     return (
@@ -46,9 +43,21 @@ const Product = (data) => {
             {
                 products ? (
                     products.map((curElm, index) => {
-                        const { _id, title, price, quantity, image } = curElm; 
+                        const { _id, title, price, quantity, image, favourite } = curElm; 
                         return(
                             <div className="product-card" data-category="home" key={index} id={_id}>   
+                            <div className='addFav'>
+                                {
+                                    favourite ? (
+                                        <img className='favBtn' id={_id}
+                                        src={heartFill} style={{color: 'red'}}  onClick={(e) => handleFav1(e)}/>
+                                    ):(
+                                        <FaRegHeart id={_id} className='favBtn'
+                                        style={{color: 'red'}} onClick={(e) => handleFav(e)}/>
+                                    )
+                                }
+
+                            </div>
                             <img src={image} loading="lazy" />               
                             <h2>{title}</h2>
                             <div className='d-flex justify-content-between'>

@@ -20,6 +20,16 @@
 	transition-duration: .5s;
 }
 
-.product-card img {
+.addFav{
+	display: flex;
+    justify-content: end;
+}
+
+.favBtn{
+	width: 1.3rem;
+	z-index: 1;
+}
+
+.product-card img:not(.favBtn) {
 	width: 100%;
 }

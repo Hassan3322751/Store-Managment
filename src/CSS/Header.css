@@ -33,3 +33,22 @@ a{
 .navLinks:focus::after{
     transform: scaleX(1);
 }
+
+.profileBtn, .searchBtn{
+    border: none;
+    border-radius: 0px;
+    font-size: .95rem;
+}
+
+.profileBtn{
+    padding: 0px 6px;
+    border-bottom: 2px solid #007bff;
+}
+
+.searchBtn{
+    background: transparent;
+}
+
+.favBtn, .cartBtn{
+    margin: auto 5px;
+}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
+import { ProductsContext } from '../Context/Context'
 import { Button } from 'react-bootstrap'
 
 const SideBar = () => {
@@ -23,21 +24,29 @@ const SideBar = () => {
     },
   ]
 
-  const handleFilters = (e) => {
+  const { getProducts, setPage, setFilter, setQuery, query } = useContext(ProductsContext)
+
+  const handleFilters = async (e) => {
     e.preventDefault();
 
     let filterQueries = []; 
     let filters = document.querySelectorAll('.filter');
+    filters.forEach(filter =>  filter.checked === true ? filterQueries.push(filter.id) : null )
 
-    filters.forEach(filter =>  filter.checked === true ? filterQueries.push(filter.id.split('.')) : null )
-    console.log(filterQueries)
+    setPage(1)
+    setFilter(filterQueries)
+    getProducts(1, filterQueries, query)
   }
-
+  
   const handleUncheck = (e) => {
     e.preventDefault();
-
+    
     let filters = document.querySelectorAll('.filter');
     filters.forEach(filter =>  filter.checked = false )
+    
+    setFilter([])
+    setPage(1)
+    getProducts(1, [], query)
   }
 
   return (
@@ -65,7 +74,7 @@ const SideBar = () => {
               }
             </div>
 
-            <Button onClick={(e) => handleFilters(e)} className='d-block m-4'>
+            <Button onClick={(e) => handleFilters(e)} className='d-block'>
               Apply Filters
             </Button>
             <Button onClick={(e) => handleUncheck(e)}>
