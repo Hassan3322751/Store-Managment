@@ -7,14 +7,15 @@ const Context = ({ children }) => {
   const [ page, setPage ] = useState(1)
   const [ products, setProducts ] = useState()
   const [ docsCount, setDocsCount ] = useState()
-  const [ filter, setFilter ] = useState();
-  const [ query, setQuery ] = useState();
+  const [ sortBy, setSortBy ] = useState([]);
+  const [ query, setQuery ] = useState(null);
+  const [ filters, setFilters ] = useState('')
 
   //Gettig Products on the base of sorting(filter) or query or both  
-  const getProducts = async (page, filter, query) => {
+  const getProducts = async (page, sortBy, query, filters) => {
     try {
-    console.log(page, filter, query)
-    const url = `http://localhost:3000/api/products?page=${page}&filter=${filter}&q=${query}`
+    const url = `https://store-manag-api.vercel.app/api/products?page=${page}&sortBy=${sortBy}&q=${query}&filters=${filters}`
+    // const url = `http://localhost:3005/api/products?page=${page}&sortBy=${sortBy}&q=${query}&filters=${filters}`
     const response = await axios.get(url , {
       headers:{
         'Content-Type': 'application/json',
@@ -31,19 +32,19 @@ const Context = ({ children }) => {
 
 //First Page Render with no Filter and Query
 useEffect(()=>{   
-  getProducts(1, [], null) //First Page Render with no Filter and Query
+  getProducts(1, [], null, '') //First Page Render with no Filter and Query
 },[])
 
 //To Add a Product in Favourites
 const addToFav = async(id) => {
   try {
-    const response = await axios.put(`http://localhost:3000/api/product?id=${id}`, {
+    const response = await axios.put(`http://localhost:3005/api/product?id=${id}`, {
       headers:{
         'Content-Type': 'application/json',
       }
     })    
     if (response.status === 200) {
-        getProducts(page, filter, query) //Updating Current Page Procuts State
+        getProducts(page, sortBy, query, filters) //Updating Current Page Procuts State
       }  
     } catch (error) {
       console.log(error)
@@ -52,8 +53,8 @@ const addToFav = async(id) => {
     
   return (
     <ProductsContext.Provider value={{
-      products, setProducts, docsCount, getProducts, page, setPage, filter, setFilter, addToFav, 
-      query, setQuery
+      products, setProducts, docsCount, getProducts, page, setPage, sortBy, setSortBy, addToFav, 
+      query, setQuery, filters, setFilters
     }}>
       {children}
     </ProductsContext.Provider>

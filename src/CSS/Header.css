@@ -7,6 +7,10 @@ a{
     text-decoration: none;
 }
 
+.headerNavBar{
+    margin: 0px 8px;
+}
+
 .headerNavBar a{
     margin: 0px .5rem;
 }
@@ -37,18 +41,30 @@ a{
 .profileBtn, .searchBtn{
     border: none;
     border-radius: 0px;
-    font-size: .95rem;
+    font-size: 1.2rem;
 }
 
-.profileBtn{
-    padding: 0px 6px;
-    border-bottom: 2px solid #007bff;
+.searchBar{
+    width: 10rem;
 }
 
 .searchBtn{
+    width: 1.9rem;
     background: transparent;
 }
 
+.searchBtn .favBtn{
+    font-size: 1.7rem;
+    width: 1.4rem;
+}
+
 .favBtn, .cartBtn{
+    width: 1.9rem;
     margin: auto 5px;
+}
+
+@media (max-width: 235px){
+    .headerNavBar{
+        margin: 0px;
+    }
 }

@@ -1,19 +1,28 @@
 import React, {useContext} from 'react';
 import { ProductsContext } from '../Context/Context';
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 import '../CSS/Header.css';
 import { FaRegHeart } from "react-icons/fa";
 
 function Header() {
-    const { setQuery, setFilter, setPage, getProducts } = useContext(ProductsContext);
+    const { setQuery, setFilters, setPage, getProducts, setSortBy } = useContext(ProductsContext);
 
     const handleClick = async() => {
-        setQuery(null)
-        setFilter([])
+        setQuery('')
+        setFilters('')
         setPage(1)
-        await getProducts(1, [], null)
+        setSortBy([])
+        await getProducts(1, [], null, '')
+    }
+    
+    const filterFavourites = async(e) => {
+        setFilters('favourite.true')
+        setPage(1)
+        setQuery(null)
+        setSortBy([])
+        await getProducts(1, [], null, 'favourite.true')
     }
 
 return (
@@ -27,38 +36,11 @@ return (
                         E-Store
                     </Link>
 
-                    <nav className='d-flex align-items-center'>
-                        <Link to='/'>
-                            <Nav.Link href="/" className='text-dark navLinks'
-                                onClick={() => handleClick()}
-                            >
-                                Home
-                            </Nav.Link>
-                        </Link>
-                        <Link to='/add'>
-                            <Nav.Link href='/' className='text-dark navLinks'>Terms</Nav.Link>
-                        </Link>
-                        <Link to='/privacy_policy'>
-                            <Nav.Link href='/' className='text-dark navLinks'>Privacy</Nav.Link>
-                        </Link>
-                        <Link to='/contact_us'>
-                            <Nav.Link href='/' className='text-dark navLinks'>Contact Us</Nav.Link>
-                        </Link>
-                    </nav>
-
                     <div className='d-flex align-items-center'>
                         <Search />
-                        <button className='searchBtn'>
+                        <button className='searchBtn' onClick={(e) => filterFavourites(e)}>
                             <FaRegHeart className='favBtn' />
                         </button>
-                        {/* <button className='searchBtn'>
-                            <GrCart className='cartBtn' />
-                        </button> */}
-                        <Link to={"/userProfile"}>
-                            <Button variant="outline-primary profileBtn">
-                                Profile
-                            </Button>
-                        </Link>
                     </div>
             </Container>
         </Navbar>

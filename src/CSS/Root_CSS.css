@@ -1,3 +1,42 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
 html{
     font-size: 16px;
+}
+
+@media (max-width: 750px){
+    html{
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 400px){
+    html{
+        font-size: 12px;
+    }
+    .sort_title{
+        display: none;
+    }
+}
+
+@media (max-width: 350px){
+    html{
+        font-size: 11px;
+    }
+    .product-card{
+        width: 10rem;
+    }
+}
+
+@media (max-width: 235px){
+    .headerNavBar{
+        margin: 0px;
+    }
+    .product-card{
+        width: 10rem;
+    }
 }

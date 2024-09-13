@@ -6,11 +6,11 @@
 
 .product-card {
     height: auto;
-	width: 300px;
-	margin: 10px;
+	width: 13.625rem;
+	margin: 0.625rem;
 	background-color: #f9f9f9;
-	padding: 10px;
-	box-shadow: 0 0 10px #ccc;
+	padding: 0.625rem;
+	box-shadow: 0 0 0.625rem #ccc;
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
 }
@@ -32,4 +32,16 @@
 
 .product-card img:not(.favBtn) {
 	width: 100%;
+}
+
+@media (max-width: 350px){
+    .product-card{
+        width: 10rem;
+	}
+}
+
+@media (max-width: 235px){
+    .product-card{
+        width: 70vw;
+	}
 }

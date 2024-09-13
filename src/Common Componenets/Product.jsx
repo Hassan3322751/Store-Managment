@@ -1,13 +1,16 @@
 import React, { useContext } from 'react'
-import { ProductsContext } from '../Context/Context.jsx';
 import '../CSS/Product.css'
+
 import { Pagination, Spinner } from 'react-bootstrap';
 import { FaRegHeart } from "react-icons/fa";
 import heartFill from '../../public/heart-fill-svgrepo-com.svg'
 
+import { ProductsContext } from '../Context/Context.jsx';
+import Sorting from './Sorting_Component/Sorting.jsx';
+
 
 const Product = () => {
-    const { products, docsCount, getProducts, page, setPage, filter, addToFav, query } = useContext(ProductsContext)
+    const { products, docsCount, getProducts, page, setPage, sortBy, addToFav, query, filters } = useContext(ProductsContext)
 
     let pags = [];
     let pages = Math.ceil(docsCount/9);
@@ -23,7 +26,8 @@ const Product = () => {
         const curPage = e.target.tabIndex;
         e.target.active = curPage;
         setPage(curPage)
-        await getProducts(curPage, filter, query)
+        console.log(filters + " Its filter in pages")
+        await getProducts(curPage, sortBy, query, filters)
     }
 
     const handleFav = async(e) => {
@@ -38,7 +42,8 @@ const Product = () => {
 
     return (
         <React.Fragment>
-        <div style={{width: '86%'}}>
+        <div>
+            <Sorting />
             <div className="products-container">		
             {
                 products ? (
