@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import '../CSS/Product.css'
+import './CSS/Product.css'
 
 import { Pagination, Spinner } from 'react-bootstrap';
 import { FaRegHeart } from "react-icons/fa";

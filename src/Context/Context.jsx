@@ -14,8 +14,7 @@ const Context = ({ children }) => {
   //Gettig Products on the base of sorting(filter) or query or both  
   const getProducts = async (page, sortBy, query, filters) => {
     try {
-    const url = `https://store-manag-api.vercel.app/api/products?page=${page}&sortBy=${sortBy}&q=${query}&filters=${filters}`
-    // const url = `http://localhost:3005/api/products?page=${page}&sortBy=${sortBy}&q=${query}&filters=${filters}`
+    const url = `http://localhost:3005/api/products?page=${page}&sortBy=${sortBy}&q=${query}&filters=${filters}`
     const response = await axios.get(url , {
       headers:{
         'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import { ProductsContext } from '../Context/Context';
 import { Container, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Search from './Search';
-import '../CSS/Header.css';
+import './CSS/Header.css';
 import { FaRegHeart } from "react-icons/fa";
 
 function Header() {
@@ -41,6 +41,9 @@ return (
                         <button className='searchBtn' onClick={(e) => filterFavourites(e)}>
                             <FaRegHeart className='favBtn' />
                         </button>
+                        <Link to='/dashboard'>
+                            <FaRegHeart className='favBtn' />
+                        </Link>
                     </div>
             </Container>
         </Navbar>

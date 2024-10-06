@@ -1,8 +1,14 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './CSS/Root_CSS.css'
+import './Common Componenets/CSS/Root_CSS.css'
+
 import Header from './Common Componenets/Header.jsx'
 import Home from './Home.jsx'
+import Dashboard from "./Pages/Dashboard/dashboard.jsx";
+import AddProduct from "./Pages/AddProduct/AddProduct.jsx";
+import Login from "./Pages/Login/login.jsx";
+import AuthRoute from "./Common Componenets/AuthRoute/AuthRoute.jsx";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -12,6 +18,23 @@ function App() {
       <Header />
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <AuthRoute>
+                  <Dashboard />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path="/addProduct"
+              element={
+                <AuthRoute>
+                  <AddProduct />
+                </AuthRoute>
+              }
+            />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
