@@ -40,7 +40,7 @@ const allItems = [
   {
     title: 'Products',
     imageUrl: '/icons/foods.svg',
-    url: '/admin/foods',
+    url: '/adminProducts',
     forAdmin: true,
     bgColor: 'cornflowerblue',
     color: 'white',

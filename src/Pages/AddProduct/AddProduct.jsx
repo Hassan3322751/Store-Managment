@@ -1,37 +1,70 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Button, InputGroup, FormControl, Form, Spinner, Container } from 'react-bootstrap';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function AddProduct() {
+    const { productId } = useParams();
+    const [imageUrl, setImageUrl] = useState();
+    
     const [ loading, setLoading ] = useState(false);
     const [productData, setProductData] = useState({
         Name: '', Price: '', Quantity: '', Image: ''
     });
-    
-    const handleContact = async(e) => {
-        e.preventDefault();
-        setLoading(true)
+    const isEditMode = !!productId;
+  
+    const navigate = useNavigate();
 
-        const { Name, Price, Quantity, Image } = productData;
+    useEffect(() => {
+        if (!isEditMode) return;
+    
+        getById(productId).then(product => {
+          if (!product) return;
+          reset(product);
+          setImageUrl(product.imageUrl);
+        });
+    }, [productId]);
+
+    const add = async(productData) => {
+        const { Name, Price, Quantity, Image } = productData
         try{
             const response = await axios.post(`http://localhost:3000/api/product`, {
-                title: Name.trim(),
-                price: Price.trim(),
-                quantity: Quantity.trim(),
+                title: Name,
+                price: Price,
+                quantity: Quantity,
                 image: Image,
             }, {
                 headers:{
                     'Content-Type': 'application/json',
                 },
             })
-            if (response.status === 201) {
-                setLoading(false)
-                alert('Product Created Successfully')
-            }
+            return response
+            // if (response.status === 201) {
+            //     setLoading(false)
+            //     console.log(response)
+            // }
         } catch (e){
             console.log("Error while creating product " + e)
         }
+    }
+    
+    const handleContact = async(e) => {
+        e.preventDefault();
+        setLoading(true)
 
+        const { Name, Price, Quantity, Image } = productData;
+        
+        if (isEditMode) {
+            await update(productData);
+            toast.success(`Product "${Name}" updated successfully!`);
+            return;
+        }
+      
+        const newProduct = await add(productData);
+        toast.success(`Product "${Name}" added successfully!`);
+        // navigate('/editProduct/' + newProduct._id, { replace: true });
+        console.log(newProduct)
     }
 
     const formData = [
@@ -64,11 +97,12 @@ return (
                     })
                 }
             <Button type="submit" className="mb-4 w-100 form-control" disabled={loading}>
-                Add Product {loading ? <Spinner animation="border" size="sm" /> : ''}
+                {isEditMode ? 'Update' : 'Create'} 
+                {loading ? <Spinner animation="border" size="sm" /> : ''}
             </Button>
             </Form>
         </Container>
     </>
 )}
 
-export default AddProduct;
+export default AddProduct
